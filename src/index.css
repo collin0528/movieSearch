@@ -1,0 +1,138 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family:  sans-serif;
+  background-color: #374a8a75;
+}
+header{
+  padding: 50px 15px 0;
+}
+header h1{
+  color: white;
+  font-size: 48px;
+  font-size: 500;
+  text-align: center;
+}
+
+main{
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+section{
+  padding: 15px;
+}
+
+.navcon{
+  width: 100%;
+  padding: 15px;
+  border: none;
+  outline: none;
+  display: inline-flex;
+
+  background-color: #333232;
+  border-radius: 8px;
+  color: #1f1c1cc9;
+  font-size: 20px;
+  font-weight: 300;
+  transition: 0.5s ease-out;
+}
+.navcon p{
+  padding: 15px;
+  color: #e4e0e0f6;
+  font-size: 20px;
+  font-weight: 300;
+  transition: 0.5s ease-out;
+  cursor: pointer;
+}
+.navcon b{
+  padding: 15px;
+  text-align: center;
+  color: #ee0f0ff6;
+  font-size: 30px;
+  font-weight: 600;
+  transition: 0.5s ease-out;
+}
+.navcon b:hover{
+  padding: 15px;
+  text-align: center;
+  color: #c5ee0ff6;
+  font-size: 15px;
+  font-weight: 300;
+  transition: 0.5s ease-out;
+}
+.searchbox{
+  display: block;
+  width: 20%;
+  padding: 15px;
+  height: 2em;
+
+  outline: none;
+  background: none;
+  position: absolute;
+  right: 20%;
+
+  background-color: white;
+  border-radius: 15px;
+  color: #1f1c1cc9;
+  font-size: 20px;
+  font-weight: 300;
+  transition: 0.10s ease-out;
+}
+.searchbox:focus{
+ box-shadow: 0px 0px 8px 3px #b4ff04;
+}
+.btn{
+  position: absolute;
+  right: 15%;
+  top: 20%;
+  color: white;
+  background-color: black;
+  font-weight: 600;
+  border-radius: 15px;
+  padding: 5px;
+  cursor: pointer;
+
+}
+.results {
+
+ 
+  width: 23%;
+  
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 20px;
+  
+}
+
+.movie-info{
+  background-color: white;
+}
+
+
+/* this is my spinner styling */
+.loader {
+  position: absolute;
+  right: 50%;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 8px solid #141414;
+  width: 60px;
+  height: 60px;
+  -webkit-animation: spin 2s linear ; 
+  animation: spin 2s linear ;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
