@@ -59,6 +59,18 @@ class Movieslist extends React.Component {
             <div class="loader" />
           ) : null}
 
+{/* the onChange on the input - this will call the
+ searchMethod method which will update the searchTerm 
+ state with the input value every time the input is changed. */}
+
+{/* the onSubmit on the form  this will call the search method
+ which will make a request to the API endpoint providing
+  the searchTerm as a query parameter. It will save the
+   response data into the moviesList array (Note that we
+    only save the imdbID values from each returned object
+     because this is all we need to pass to our MovieCard
+      component as a prop). */}
+
                 <form onSubmit={this.search}>
                     <input
                        className='searchbox'
@@ -72,7 +84,9 @@ class Movieslist extends React.Component {
                         search
                     </button>
                 </form>
-      
+                {/* In the render method, we check to see if the 
+                array has at least one item. If it doesn't, 
+                we display an "error" message to the user. */}
                 {moviesList.length > 0 ? (
                     moviesList.map(movie => (
                         <MovieCard movieID={movie} key={movie} />
