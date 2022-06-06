@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 class Navtool extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
+        this.props=props
     }
 
     render() { 
         return (
             <section>
                 <div className='navcon'>
-                    <p>Home</p>
+                    <p onClick={() => this.props.defaultpageMethod()}>Home</p>
                     <p>About</p>
                     <p>Services</p>
-                    <b>CUTS MOVIE HUB</b>
+                    <b>pHRESHCODE MOVIE HUB</b>
                 </div>
             </section>
         );

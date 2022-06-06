@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
-import MovieCard from './MovieCard';
+
 import axios from 'axios';
 class Movieslist extends React.Component {
-    state = {
+constructor(){
+    super() 
+    this.state = {
+        movieData: {},
+        loading: false,
+    moviesList:[],
+    searchTerm: '',
+    value: localStorage.getItem('movie-collection') == null ? 0 : JSON.parse(localStorage.getItem('movie-collection')).length,
+     movieCollection:  localStorage.getItem('movie-collection') == null ? [] : JSON.parse(localStorage.getItem('movie-collection'))
 
-            loading: false,
-        moviesList: ['tt2294629'],
-        searchTerm: ''
-    };
+};
+}
 
     search = event => {
         
         event.preventDefault();
-        axios
-            .get(
-        
+        this.setState({
+            loading: true
+        })
+        axios.get(
                 `https://www.omdbapi.com/?apikey=${"bab92e68"}&s=${
                     this.state.searchTerm
                 }&plot=full`
@@ -22,26 +29,21 @@ class Movieslist extends React.Component {
             )
             .then(res => res.data)
             .then(res => {
+                console.log(res);
+                this.setState({
+                    loading: false
+                })
                 if (!res.Search) {
                     this.setState({ moviesList: [] });
                     return;
                 }
 
-                const moviesList = res.Search.map(movie => movie.imdbID);
-                this.setState({
-                    moviesList
-                });
+                    this.setState({
+                        moviesList:res.Search
+                    });
             });
     };
 
-
-    LoaderMethod = () => {
-        if (!this.state.loading) {
-          this.setState({ loading: true });
-        } else {
-          this.setState({ loading: false });
-        }
-      };
 
     searchMethod = event => {
         this.setState({
@@ -49,53 +51,118 @@ class Movieslist extends React.Component {
         });
     };
 
+    showMovie=(index)=>{
+        let single_movie = []
+            single_movie.push(this.state.moviesList[index])
+            this.setState({
+                moviesList : single_movie
+            })
+
+    }
+    addToCollection = (index) => {
+        
+        let movie_to_add = this.state.moviesList[index];
+
+        let movies_collection = localStorage.getItem('movie-collection');
+
+        if(movies_collection == null){
+            movies_collection = [];
+            movies_collection.push(movie_to_add);
+
+            localStorage.setItem('movie-collection', JSON.stringify(movies_collection))
+
+            // this.setState({
+            //     moviesList: movies_collection
+            // })
+        }else{
+            movies_collection = JSON.parse(movies_collection);
+            movies_collection.push(movie_to_add);
+            localStorage.setItem('movie-collection', JSON.stringify(movies_collection))
+            // this.setState({
+            //     moviesList: movies_collection
+            // })
+
+        }
+
+        this.setState({
+            value: this.state.value + 1
+        })
+    }
+
+    removeFromCollection = (index) => {
+        
+        let movie_to_remove = this.state.moviesList[index];
+
+        let movies_remove = localStorage.getItem('movie-collection');
+
+        if(movies_remove == movies_remove){
+            movies_remove = [];
+            movies_remove.slice(movie_to_remove);
+
+            localStorage.setItem('movie-collection', JSON.stringify(movies_remove))
+        }else{
+            movies_remove = JSON.parse(movies_remove);
+            movies_remove.slice(movie_to_remove);
+            localStorage.removeItem('movie-collection')
+        }
+
+        this.setState({
+            value: this.state.value - 1
+        })
+    }
+  
     render() {
+
+        let loadingSpinner;
+        if(this.state.loading == true){
+            loadingSpinner = <div className='loader'/>
+        }else{
+            loadingSpinner = <div></div>
+        }
+
         const { moviesList } = this.state;
 
+        console.log('from render: ', moviesList)
+
+        
+        let movieSearchedResults;
+        if(moviesList.length == 0){
+            movieSearchedResults =  <div>No result with that stupid name</div>
+        }else{
+            movieSearchedResults = moviesList.map((movie, index) => (
+                <div className='movie-card ' key={index}>   
+                        <img className='viewImage' src={movie.Poster} />
+                        <div key={index}>
+                        <h3>{movie.Title}</h3>
+                        <h4> {movie.Type}</h4>
+                        <p>{movie.Year}</p>
+                        <h1>{movie.imdbID}</h1>
+                        <div className='btn1'>
+                        <button className='btn2' onClick={()=>this.showMovie(index)}>Details</button>
+                        <b className='btn2' onClick={() => this.addToCollection(index)}>AddToWatch</b>
+                        <b className='btn2' onClick={() => this. removeFromCollection(index)}>Remove</b>
+                        </div>
+                        </div>
+                </div>))  
+        }
         return (
             <div>
 
-{this.state.loading ? (
-            <div class="loader" />
-          ) : null}
-
-{/* the onChange on the input - this will call the
- searchMethod method which will update the searchTerm 
- state with the input value every time the input is changed. */}
-
-{/* the onSubmit on the form  this will call the search method
- which will make a request to the API endpoint providing
-  the searchTerm as a query parameter. It will save the
-   response data into the moviesList array (Note that we
-    only save the imdbID values from each returned object
-     because this is all we need to pass to our MovieCard
-      component as a prop). */}
-
+                {loadingSpinner}
+                <i className='movieshow'>{this.state.value}</i>
                 <form onSubmit={this.search}>
                     <input
                        className='searchbox'
                         placeholder=".......Search"
                         onChange={this.searchMethod}
                     />
-                    <button type="submit" className='btn'
-                     onClick={() => this.LoaderMethod()}
+                    {/* <button type="submit" className='btn'
                     >
                      {this.state.loading }
                         search
-                    </button>
+                    </button> */}
                 </form>
-                {/* In the render method, we check to see if the 
-                array has at least one item. If it doesn't, 
-                we display an "error" message to the user. */}
-                {moviesList.length > 0 ? (
-                    moviesList.map(movie => (
-                        <MovieCard movieID={movie} key={movie} />
-                    ))
-                ) : (
-                    <p>
-                        Couldn't find any movie with that stupid name.
-                    </p>
-                )}
+                    {movieSearchedResults}
             </div>
         );
     }

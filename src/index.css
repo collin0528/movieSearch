@@ -86,32 +86,6 @@ section{
 .searchbox:focus{
  box-shadow: 0px 0px 8px 3px #b4ff04;
 }
-.btn{
-  position: absolute;
-  right: 15%;
-  top: 20%;
-  color: white;
-  background-color: black;
-  font-weight: 600;
-  border-radius: 15px;
-  padding: 5px;
-  cursor: pointer;
-
-}
-.results {
-
- 
-  width: 23%;
-  
-    grid-template-columns: 1fr 1fr;
-    gap: 5px 20px;
-  
-}
-
-.movie-info{
-  background-color: white;
-}
-
 
 /* this is my spinner styling */
 .loader {
@@ -136,3 +110,81 @@ section{
   100% { transform: rotate(360deg); }
 }
 
+.movieshow {
+  display: inline-block;
+  position: relative;
+  right: 10%;
+  background: #723636;
+  padding: 15px;
+}
+
+
+
+
+i{
+  padding: 0 4px;
+  height: 37px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(224, 227, 237);
+  position: absolute;
+  top: 10%;
+  left: 90%;
+  transform: translate(0%, -50%);
+  font-size: 14px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.btn1 .btn2 {
+  background-color: #6277a7;
+  border: 1px solid green;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  float: left;
+
+}
+.btn2{
+  border-radius: 20px;
+}
+
+
+.btn1 .btn2:not(:last-child) {
+  border-right: none; 
+}
+
+.btn1 .btn2:hover {
+opacity: 0.2;
+color: #141414;
+}
+
+  .viewImage{
+ 
+  transition: transform .2s; 
+ 
+
+  }
+
+  .viewImage:hover{
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+
+.movie-card {
+  
+  min-height: 420px;
+  width: 23%;
+display: inline-block;
+padding-top: 60px;
+background-color: none;
+margin-right: 30px;
+justify-content: space-around;
+
+}
