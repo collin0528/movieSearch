@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
+import ShowResult from './ShowResult';
 class Movieslist extends React.Component {
 constructor(){
     super() 
@@ -14,6 +15,7 @@ constructor(){
 
 };
 }
+
 
     search = event => {
         
@@ -71,23 +73,17 @@ constructor(){
 
             localStorage.setItem('movie-collection', JSON.stringify(movies_collection))
 
-            // this.setState({
-            //     moviesList: movies_collection
-            // })
         }else{
             movies_collection = JSON.parse(movies_collection);
             movies_collection.push(movie_to_add);
             localStorage.setItem('movie-collection', JSON.stringify(movies_collection))
-            // this.setState({
-            //     moviesList: movies_collection
-            // })
-
         }
 
         this.setState({
             value: this.state.value + 1
         })
     }
+
 
     removeFromCollection = (index) => {
         
@@ -110,9 +106,25 @@ constructor(){
             value: this.state.value - 1
         })
     }
+
+    loadCollection=()=>{
+        // alert("works")
+
+        let collectionStorage = localStorage.getItem("movie-collection");
+        if(collectionStorage != null){
+            collectionStorage = JSON.parse(collectionStorage);
+
+            this.setState({
+                moviesList: collectionStorage
+            })
+        }
+      
+      }
+
+   
+
   
     render() {
-
         let loadingSpinner;
         if(this.state.loading == true){
             loadingSpinner = <div className='loader'/>
@@ -145,25 +157,28 @@ constructor(){
                         </div>
                 </div>))  
         }
+
         return (
+            <>
             <div>
 
                 {loadingSpinner}
-                <i className='movieshow'>{this.state.value}</i>
+                <div className='coverrar'  onClick={this.loadCollection}>
+             <i className='movieshow'>
+                {this.state.value}</i>
+                </div>
                 <form onSubmit={this.search}>
                     <input
                        className='searchbox'
                         placeholder=".......Search"
                         onChange={this.searchMethod}
                     />
-                    {/* <button type="submit" className='btn'
-                    >
-                     {this.state.loading }
-                        search
-                    </button> */}
+                    <button>back</button>
                 </form>
                     {movieSearchedResults}
+                  
             </div>
+            </>
         );
     }
 }

@@ -13,12 +13,16 @@ class App extends Component {
     this.props=props
     this.state={
      default_page : localStorage.getItem("current-page"),
+  
+     
+
      
     }
    
+
+   
   }
 
- 
 
   loadPage = (pagename) =>{
    

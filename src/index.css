@@ -114,9 +114,28 @@ section{
   display: inline-block;
   position: relative;
   right: 10%;
-  background: #723636;
+  /* background: #723636; */
   padding: 15px;
+
+
+ 
 }
+.coverrar {
+ 
+  background: #e42611;
+  height: 30px;
+  border-radius: 25px;
+  width: 40px;
+  position: absolute;
+  top: 7%;
+  left: 85%;
+  cursor: pointer;
+
+
+
+ 
+}
+
 
 
 
